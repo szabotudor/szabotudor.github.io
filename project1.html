@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Page</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            setTimeout(() => {
+                document.querySelector('.project-body').classList.remove('fade-in');
+                document.querySelector('.back-button').classList.add('show');
+            }, 1);
+        });
+    </script>
+</head>
+<body>
+
+
+    <div class="fade-in project-body">
+        <h1>Welcome to the Project Page</h1>
+    </div>
+
+    <a class="back-button" onclick="slideOutOfPage()">⮌ Back</a>
+
+
+</body>
+</html>
