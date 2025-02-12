@@ -1,0 +1,11 @@
+@font-face {
+    font-family: Panton;
+    src: url("assets/panton-font/Panton-BlackCaps.otf");
+    font-weight: normal;
+    font-style: normal;
+}
+
+header1 {
+    font-family: Panton;
+    font-size: 48px;
+}
