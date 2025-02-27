@@ -5,26 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Portfolio</title>
     <link rel="stylesheet" href="style.css">
-    <script src="script.js"></script>
-    <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            setTimeout(() => {
-                document.querySelector('.left').classList.remove('slide-left');
-                document.querySelector('.right').classList.remove('slide-right');
-            }, 100);
-        });
-    </script>
 </head>
 <body>
 
 
-    <div class="left slide-left"></div>
+    <div class="left"></div>
 
-    <div class="right slide-right">
+    <div class="right">
         <h1>Tudor Szabo</h1>
         <h2>My Projects</h2>
         <div class="icon-buttons">
-            <a onclick="transitionToPage('project1.html'); slideAway(); return false;"><img src="assets/icon1.jpg" alt="Project 1"></a>
+            <a href="./project1.html"><img src="assets/icon1.jpg" alt="Project 1"></a>
         </div>
     </div>
 

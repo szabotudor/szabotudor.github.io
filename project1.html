@@ -6,14 +6,6 @@
     <title>Project Page</title>
     <link rel="stylesheet" href="style.css">
     <script src="script.js"></script>
-    <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            setTimeout(() => {
-                document.querySelector('.project-body').classList.remove('fade-in');
-                document.querySelector('.back-button').classList.add('show');
-            }, 1);
-        });
-    </script>
 </head>
 <body>
 
@@ -22,7 +14,9 @@
         <h1>Welcome to the Project Page</h1>
     </div>
 
-    <a class="back-button" onclick="slideOutOfPage()">⮌ Back</a>
+    <div class="back-button">
+        <a href="./index.html">⮌ Back</a>
+    </div>
 
 
 </body>
