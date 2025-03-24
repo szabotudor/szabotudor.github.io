@@ -7,7 +7,13 @@ body {
 
 @font-face {
     font-family: Panton;
-    src: url("assets/panton-font/Panton-BlackCaps.otf");
+    src: url("assets/fonts/Panton-BlackCaps.otf");
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: Antapani;
+    src: url("assets/fonts/Antapani-ExtraBold.otf");
     font-weight: normal;
     font-style: normal;
 }
@@ -26,18 +32,27 @@ body {
     text-align: center;
     transition: transform 0.5s ease-in-out;
 }
+.text {
+    font-family: Antapani;
+    font-size: 1.5rem;
+}
 h1 {
     font-family: Panton;
-    font-size: 3rem;
+    font-size: 3.5rem;
     text-align: center;
     margin: 0;
     margin-bottom: 200px;
 }
 h2 {
     font-family: Panton;
-    font-size: 2rem;
+    font-size: 3.5rem;
     text-align: center;
-    margin-top: 15px;
+    margin-top: 200px;
+}
+h3 {
+    font-family: Panton;
+    font-size: 3.5rem;
+    text-align: center;
 }
 .icon-buttons {
     display: flex;

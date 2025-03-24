@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Magma Engine</title>
     <link rel="stylesheet" href="style.css">
+    <script src="script.js"></script>
 </head>
 <body>
 
@@ -67,7 +68,7 @@
         <section class="row reverse" id="FileStructure">
             <img src="assets/magma/engine-files.png" alt="Img8">
             <div class="text">
-                Everything is modifiable and replaceable.<br>
+                Everything is modifiable and replaceable.<br><br>
                 The graphics/compute backend is a simple wrapper for any graphics API (in this case, OpenGL).<br>
                 Changing it is a drop-in replacement, just place a different backend library inside the "shared" folder, and the engine will pick it up.<br><br>
                 The backend is a simple interface, following <a href="https://github.com/szabotudor/magma/blob/main/backends/include/backend.hpp">this standard</a>.
