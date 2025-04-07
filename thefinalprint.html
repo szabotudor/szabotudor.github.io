@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Final Print</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js"></script>
+</head>
+<body>
+
+
+    <div class="content">
+        <h1>
+            The Final Print
+        </h1>
+
+        <section class="row" id="Main">
+            <img src="./assets/thefinalprint/title.jpg" alt="TFP">
+            <div class="text">
+                <a href="https://store.steampowered.com/app/3365840/">The Final Print</a> is a story-focused adventure game made in Unreal Engine 5 about a journalist solving a murder in Harlem, New York, in the 1940s.<br><br>
+                The game was made by me and my team as our Year 3 project at BUAS<br><br>
+                I was Lead Programmer, and my main roles in the development process were <b>Project Vision</b> and <b>Engine Tools</b>.
+            </div>
+        </section>
+        <section class="row reverse" id="Blueprint Accessor">
+            <div class="image-container">
+                <img src="./assets/thefinalprint/accessor_postprocess.png" alt="Accessor">
+                <img src="./assets/thefinalprint/accessor_pictures.png" alt="Accessor2">
+                <img src="./assets/thefinalprint/accessor_scenecapture.png" alt="Accessor3">
+                <img src="./assets/thefinalprint/accessor_camerawidget.png" alt="Accessor4">
+            </div>
+            <div class="text">
+                The first tool I made was the BlueprintAccessor.<br><br>
+                It is meant to simplify interacting with Blueprints from C++.<br><br>
+                It was useful because our game had a lot of Blueprints that needed to be triggered from the more performance critical C++ code.
+            </div>
+        </section>
+        <section class="row" id="Debug Menu">
+            <div class="image-container">
+                <img src="./assets/thefinalprint/debug_select_screen.png" alt="DebugMenu">
+                <img src="./assets/thefinalprint/debug_journalist_screen.png" alt="DebugMenu2">
+                <img src="./assets/thefinalprint/debug_component.png" alt="DebugMenu3">
+            </div>
+            <div class="text">
+                In a game with a long story and dialogue options, it's useful to have tools to speed up testing.<br><br>
+                The Debug Menu does that through features like skipping through dialogue or giving items to the player.<br><br>
+                It is implemented using ImGui, and exposes all functions and variables from any actor that the "DebugMenu" component is added on, as long as their type is registered.<br><br>
+            </div>
+        </section>
+        <section class="row reverse" id="Automation">
+            <img src="./assets/thefinalprint/automation.png" alt="Automation">
+            <div class="text">
+                I also worked on parts of automated tooling, like our CI/CD pipeline, using Jenkins.<br><br>
+                I was responsible for Steam build uploads and Automated Tests using Unreal's Automation system.<br><br>
+            </div>
+        </section>
+    </div>
+
+    <div class="back-button">
+        <a href="./index.html">⮌ Back</a>
+    </div>
+
+
+</body>
+</html>
