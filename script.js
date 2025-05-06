@@ -3,6 +3,9 @@ const contents = document.querySelectorAll('.tab-content');
 
 const container = document.getElementById('tab-content-container');
 
+const title = document.getElementById('tab-title');
+const titleFrame = document.querySelector('.title-frame');
+
 
 function getYear() {
     return new Date().getFullYear();
@@ -19,14 +22,23 @@ function setExperience() {
 };
 
 
-function loadTab(tabName) {
+function loadTab(tabName, loadInto = '.tab-content-container') {
     const fileToOpen = './tabs/' + tabName + '.html';
     console.info('Opening file: ' + fileToOpen);
 
-    const contentContainer = document.querySelector('.tab-content-container');
+    const contentContainer = document.querySelector(loadInto);
     contentContainer.classList.remove('show');
 
     const frame = document.querySelector('.content-frame');
+
+    // Slide up and fade out title
+    titleFrame.classList.add('hidden');
+
+    // After title hidden, update and fade in again
+    setTimeout(() => {
+        title.textContent = document.querySelector(`.tab-button[data-tab="${tabName}"]`).textContent;
+        titleFrame.classList.remove('hidden');
+    }, 300);
 
     setTimeout(() => {
         fetch(fileToOpen)
@@ -55,6 +67,7 @@ function loadTab(tabName) {
         });
     }, 150);
 }
+
 
 buttons.forEach(btn => {
   btn.addEventListener('click', () => {

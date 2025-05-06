@@ -41,12 +41,31 @@ a:active {
     padding: 20px;
 }
 
+.title-frame {
+    overflow: hidden;
+    text-align: center;
+    opacity: 1;
+
+    position: relative;
+    z-index: 1; /* Behind the tabs-frame (z-index: 2) */
+    transform: translateY(0);
+    transition: transform 0.4s ease;
+}
+
+.title-frame.hidden {
+    transform: translateY(-100%);
+}
+
 .tabs-frame {
     width: auto;
     display: flex;
     gap: 10px;
     padding: 10px;
     justify-content: center;
+
+    background-color: #121212; /* same as body or pick another solid color */
+    z-index: 2;
+    position: relative;
 }
 
 .tab-button {
