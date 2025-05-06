@@ -1,7 +1,6 @@
 /* General Layout and Design */
 body {
     margin: 0;
-    /* font-family: 'Arial', sans-serif; */
     background-color: #1a1a1a;
     color: #e0e0e0;
     display: flex;
@@ -28,7 +27,8 @@ a:active {
     color: #ffffff;
 }
 
-/* Content styling */
+/* ------------------------------------------------------------------- */
+/* Content Styling Section */
 .content {
     width: 100%;
     max-width: 1200px;
@@ -40,7 +40,7 @@ a:active {
     margin-top: 40px;
 }
 
-/* Container for text and image */
+/* Intro Container */
 .intro-container {
     display: flex;
     gap: 2rem;
@@ -49,7 +49,7 @@ a:active {
     flex-wrap: wrap;
 }
 
-/* Profile image */
+/* Profile Image */
 .profile-img {
     max-width: 30%;
     border-radius: 8px;
@@ -62,19 +62,17 @@ a:active {
     box-shadow: 0px 6px 16px rgba(0, 0, 0, 0.8);
 }
 
-/* Text content styling */
+/* Intro Text */
 .intro-text {
     flex: 1;
     line-height: 1.6;
     font-size: 1.1rem;
 }
 
-/* Paragraph styling */
 .intro-text p {
     margin-bottom: 15px;
 }
 
-/* Link styles */
 .intro-text a {
     color: #80b3ff;
     text-decoration: none;
@@ -86,13 +84,12 @@ a:active {
     text-decoration: underline;
 }
 
-/* Adjust font for experience years */
 .intro-text span {
     font-weight: bold;
     color: #80b3ff;
 }
 
-/* Responsive Design */
+/* Responsive Design for Intro Section */
 @media (max-width: 768px) {
     .intro-container {
         flex-direction: column;
@@ -110,7 +107,8 @@ a:active {
     }
 }
 
-
+/* ------------------------------------------------------------------- */
+/* Container for Pages */
 .container {
     width: 80%;
     max-width: 1200px;
@@ -119,13 +117,14 @@ a:active {
     gap: 30px;
 }
 
+/* ------------------------------------------------------------------- */
 /* Title Frame (Animated) */
 .title-frame {
     overflow: hidden;
     text-align: center;
     opacity: 1;
     position: relative;
-    z-index: 1; 
+    z-index: 1;
     transform: translateY(0);
     transition: transform 0.5s ease-out, opacity 0.3s ease;
 }
@@ -135,7 +134,8 @@ a:active {
     opacity: 0;
 }
 
-/* Tabs Frame */
+/* ------------------------------------------------------------------- */
+/* Tabs Section */
 .tabs-frame {
     width: auto;
     display: flex;
@@ -174,13 +174,14 @@ a:active {
 
 .tab-button:hover {
     background-color: #333;
-    transform: scale(1.1); /* Increased scale value */
+    transform: scale(1.1);
 }
 
 .tab-button:focus {
     outline: none;
 }
 
+/* ------------------------------------------------------------------- */
 /* Content Frame */
 .content-frame {
     overflow: hidden;
@@ -209,8 +210,8 @@ a:active {
     opacity: 1;
 }
 
-
-/* Projects/PrevWork pages */
+/* ------------------------------------------------------------------- */
+/* Projects/PrevWork Pages */
 .projects-container {
     display: flex;
     overflow: hidden;
@@ -224,14 +225,14 @@ a:active {
     top: 50%;
     transform: translateY(-50%);
     z-index: 10;
-    width: 80px; /* Set a fixed width */
-    height: 80px; /* Set the height equal to the width to make it circular */
+    width: 80px;
+    height: 80px;
     font-size: 50px;
     cursor: pointer;
     background-color: #333;
     border: none;
     color: #fff;
-    border-radius: 50%; /* Make it circular */
+    border-radius: 50%;
     transition: transform 0.3s ease, background-color 0.3s ease;
     display: flex;
     justify-content: center;
@@ -252,7 +253,7 @@ a:active {
     transform: translateY(-50%) scale(1.1);
 }
 
-/* Disabled state for navigation buttons */
+/* Disabled State for Navigation Buttons */
 #prev-project.disabled,
 #next-project.disabled {
     background-color: #555;
@@ -260,7 +261,7 @@ a:active {
     cursor: not-allowed;
 }
 
-
+/* Project Slider */
 .project-slider {
     display: flex;
     transition: transform 0.5s ease;
