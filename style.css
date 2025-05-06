@@ -67,6 +67,7 @@ a:active {
     flex: 1;
     line-height: 1.6;
     font-size: 1.1rem;
+    font-weight: bold;
 }
 
 .intro-text p {
@@ -85,8 +86,8 @@ a:active {
 }
 
 .intro-text span {
-    font-weight: bold;
-    color: #80b3ff;
+    font-weight: bolder;
+    color: rgb(165, 246, 181);
 }
 
 /* Responsive Design for Intro Section */

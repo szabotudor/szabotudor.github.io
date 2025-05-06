@@ -54,7 +54,7 @@ function loadTab(tabName, loadInto = '.tab-content-container') {
 
             contentContainer.classList.add('show');
 
-            if (tabName === 'about-me') {
+            if (tabName === './tabs/about-me') {
                 setExperience();
             }
 
