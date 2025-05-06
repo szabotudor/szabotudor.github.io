@@ -114,3 +114,79 @@ a:active {
 .tab-content-container.show {
     opacity: 1;
 }
+
+
+/* Projects/PrevWork pages */
+
+.projects-container {
+    display: flex;
+    overflow: hidden;
+    width: 100%;
+    height: 100%;
+}
+
+#prev-project,
+#next-project {
+    position: fixed;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 1000;
+    padding: 10px 20px;
+    font-size: 20px;
+    cursor: pointer;
+    background-color: #2a2a2a;
+    border: 1px solid #444;
+    color: #e0e0e0;
+    border-radius: 8px;
+}
+
+#prev-project.disabled,
+#next-project.disabled {
+    background-color: #444;
+    color: #444;
+}
+
+#prev-project {
+    left: 10px;
+}
+
+#next-project {
+    right: 10px;
+}
+
+.project-slider {
+    display: flex;
+    transition: transform 0.5s ease;
+    width: 100%;
+}
+
+.project-slide {
+    flex-shrink: 0;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 16px;
+}
+
+.project {
+    min-width: 100%;
+    box-sizing: border-box;
+    padding: 20px;
+}
+
+.project-text {
+    width: 100%;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    box-sizing: border-box;
+    padding: 8px 0;
+    font-size: 1rem;
+    line-height: 1.5;
+}
+
+.project-img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+    margin: 12px 0;
+    box-sizing: border-box;
+}

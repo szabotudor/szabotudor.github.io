@@ -1,0 +1,54 @@
+<div class="project-slide">
+    <h1>Magma Engine</h1>
+
+    <img class="project-img" src="./assets/magma/editor.png" alt="Editor Screenshot">
+
+    <div class="project-text">
+        <a href="https://github.com/szabotudor/magma">Magma Engine</a> is a custom game engine written in C/C++.<br><br>
+        It uses ImGui to display the editor interface, making it easy to extend with custom plugins and add-ons.<br><br>
+        Powering the engine is the SystemManager, designed to allow adding to, or modifying the engine's systems.
+    </div>
+
+    <img class="project-img" src="assets/magma/notifs.png" alt="Notification System Screenshot">
+    <img class="project-img" src="assets/magma/create-systems.png" alt="Create Systems Screenshot">
+
+    <div class="project-text">
+        The SystemManager makes creating new systems a simple task.<br><br>
+        Make a class inheriting from System as a base.<br>Then add it to the engine by creating the system.<br><br>
+        This design ensures extendability and compartmentalization of systems.<br><br>
+        The API is minimal and simple to use, almost no boilerplate needed.
+    </div>
+
+    <img class="project-img" src="assets/magma/better-notifs.png" alt="Better Notifications">
+    <img class="project-img" src="assets/magma/replace-system.png" alt="Replace Systems">
+
+    <div class="project-text">
+        Or even better, replace existing systems at any time outside of that system's update functions.<br><br>
+        Don't like the renderer?<br>Or the ECS?<br>Or the physics system?<br>Or you just miss a specific feature that you'd like.
+    </div>
+
+    <img class="project-img" src="assets/magma/editor-windows.png" alt="Editor Windows">
+
+    <div class="project-text">
+        Magma also has an API for creating editor windows.<br><br>
+        Just like systems, different types of windows can be added to the editor (when available).<br><br>
+        The base Magma code uses both the SystemManager and the EditorWindow for its built-in systems, so everything is modular.
+    </div>
+
+    <img class="project-img" src="assets/magma/works-on-linux.png" alt="Linux Support">
+
+    <div class="project-text">
+        The engine is multi-platform.<br>It works on Windows and Linux, and it can build games for both platforms.<br><br>
+        Porting the engine to other platforms is easy thanks to its modularity.<br><br>
+        Everything a user might interact with is abstracted: the filesystem, the graphics and compute API etc.
+    </div>
+
+    <img class="project-img" src="assets/magma/engine-files.png" alt="File Structure">
+
+    <div class="project-text">
+        Everything is modifiable and replaceable.<br><br>
+        The graphics/compute backend is a simple wrapper for any graphics API (in this case, OpenGL).<br>
+        Changing it is a drop-in replacement, just place a different backend library inside the "shared" folder, and the engine will pick it up.<br><br>
+        The backend is a simple interface, following <a href="https://github.com/szabotudor/magma/blob/main/backends/include/backend.hpp">this standard</a>.
+    </div>
+</div>

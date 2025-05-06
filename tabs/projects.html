@@ -1,2 +1,15 @@
-<div class="content">
+<div class="projects-container">
+    <button style="z-index: 2;" id="prev-project" disabled>&lt;</button>
+
+    <div class="project-slider">
+        <!-- Projects will be loaded and inserted here -->
+    </div>
+
+    <button style="z-index: 2;" id="next-project" disabled>&gt;</button>
 </div>
+
+<!-- Specify projects to preload -->
+<div class="project-preload" data-tab="./tabs/projects/magma.html"></div>
+<div class="project-preload" data-tab="./tabs/projects/mgmecs.html"></div>
+
+<script src="../tabs/subscript.js"></script>
