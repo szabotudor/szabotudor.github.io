@@ -3,11 +3,7 @@
     const slider = document.querySelector('.project-slider');
     let currentIndex = 0;
 
-    console.info("lol");
-
     const updateSliderPosition = () => {
-        console.info('Updating Slider Position');
-
         const containerWidth = slider.clientWidth;
         slider.style.transform = `translateX(-${currentIndex * containerWidth}px)`;
         document.getElementById('prev-project').disabled = currentIndex === 0;
@@ -24,6 +20,11 @@
             wrapper.classList.add('project-slide');
             wrapper.innerHTML = html;
             slider.appendChild(wrapper);
+
+            // Add animation on project load
+            setTimeout(() => {
+                wrapper.classList.add('show');
+            }, 100);
         })
         .catch(err => {
             console.error(`Failed to load project at ${path}:`, err);

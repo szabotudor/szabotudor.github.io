@@ -1,8 +1,8 @@
-
+/* General Layout and Design */
 body {
     margin: 0;
-    font-family: sans-serif;
-    background-color: #121212;
+    /* font-family: 'Arial', sans-serif; */
+    background-color: #1a1a1a;
     color: #e0e0e0;
     display: flex;
     flex-direction: column;
@@ -28,42 +28,122 @@ a:active {
     color: #ffffff;
 }
 
+/* Content styling */
+.content {
+    width: 100%;
+    max-width: 1200px;
+    padding: 40px 20px;
+    background-color: #1a1a1a;
+    color: #e0e0e0;
+    border-radius: 8px;
+    box-sizing: border-box;
+    margin-top: 40px;
+}
+
+/* Container for text and image */
+.intro-container {
+    display: flex;
+    gap: 2rem;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+/* Profile image */
+.profile-img {
+    max-width: 30%;
+    border-radius: 8px;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.6);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.profile-img:hover {
+    transform: scale(1.05);
+    box-shadow: 0px 6px 16px rgba(0, 0, 0, 0.8);
+}
+
+/* Text content styling */
+.intro-text {
+    flex: 1;
+    line-height: 1.6;
+    font-size: 1.1rem;
+}
+
+/* Paragraph styling */
+.intro-text p {
+    margin-bottom: 15px;
+}
+
+/* Link styles */
+.intro-text a {
+    color: #80b3ff;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.intro-text a:hover {
+    color: #aaccff;
+    text-decoration: underline;
+}
+
+/* Adjust font for experience years */
+.intro-text span {
+    font-weight: bold;
+    color: #80b3ff;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .intro-container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .profile-img {
+        max-width: 50%;
+        margin-bottom: 20px;
+    }
+
+    .intro-text {
+        text-align: center;
+        font-size: 1rem;
+    }
+}
+
+
 .container {
     width: 80%;
     max-width: 1200px;
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 30px;
 }
 
-.frame {
-    border-radius: 12px;
-    padding: 20px;
-}
-
+/* Title Frame (Animated) */
 .title-frame {
     overflow: hidden;
     text-align: center;
     opacity: 1;
-
     position: relative;
-    z-index: 1; /* Behind the tabs-frame (z-index: 2) */
+    z-index: 1; 
     transform: translateY(0);
-    transition: transform 0.4s ease;
+    transition: transform 0.5s ease-out, opacity 0.3s ease;
 }
 
 .title-frame.hidden {
     transform: translateY(-100%);
+    opacity: 0;
 }
 
+/* Tabs Frame */
 .tabs-frame {
     width: auto;
     display: flex;
-    gap: 10px;
-    padding: 10px;
+    gap: 20px;
+    padding: 15px 30px;
     justify-content: center;
-
-    background-color: #121212; /* same as body or pick another solid color */
+    background-color: #333333;
+    border-radius: 8px;
     z-index: 2;
     position: relative;
 }
@@ -75,18 +155,33 @@ a:active {
     color: #e0e0e0;
     padding: 10px 20px;
     cursor: pointer;
-    transition: background-color 0.2s;
+    transition: background-color 0.2s ease, transform 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.tab-button i {
+    font-size: 16px;
+    color: #80b3ff;
 }
 
 .tab-button.active {
-    background-color: #3a3a3a;
-    border-color: #4a4a4a;
+    background-color: #444;
+    border-color: #555;
+    transform: scale(1.05);
 }
 
 .tab-button:hover {
     background-color: #333;
+    transform: scale(1.1); /* Increased scale value */
 }
 
+.tab-button:focus {
+    outline: none;
+}
+
+/* Content Frame */
 .content-frame {
     overflow: hidden;
     height: auto;
@@ -105,10 +200,9 @@ a:active {
     display: block;
 }
 
-
 .tab-content-container {
     opacity: 0;
-    transition: opacity 0.5s ease;
+    transition: opacity 0.3s ease;
 }
 
 .tab-content-container.show {
@@ -117,7 +211,6 @@ a:active {
 
 
 /* Projects/PrevWork pages */
-
 .projects-container {
     display: flex;
     overflow: hidden;
@@ -130,20 +223,19 @@ a:active {
     position: fixed;
     top: 50%;
     transform: translateY(-50%);
-    z-index: 1000;
-    padding: 10px 20px;
-    font-size: 20px;
+    z-index: 10;
+    width: 80px; /* Set a fixed width */
+    height: 80px; /* Set the height equal to the width to make it circular */
+    font-size: 50px;
     cursor: pointer;
-    background-color: #2a2a2a;
-    border: 1px solid #444;
-    color: #e0e0e0;
-    border-radius: 8px;
-}
-
-#prev-project.disabled,
-#next-project.disabled {
-    background-color: #444;
-    color: #444;
+    background-color: #333;
+    border: none;
+    color: #fff;
+    border-radius: 50%; /* Make it circular */
+    transition: transform 0.3s ease, background-color 0.3s ease;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 #prev-project {
@@ -153,6 +245,21 @@ a:active {
 #next-project {
     right: 10px;
 }
+
+#prev-project:hover,
+#next-project:hover {
+    background-color: #444;
+    transform: translateY(-50%) scale(1.1);
+}
+
+/* Disabled state for navigation buttons */
+#prev-project.disabled,
+#next-project.disabled {
+    background-color: #555;
+    color: #777;
+    cursor: not-allowed;
+}
+
 
 .project-slider {
     display: flex;
@@ -189,4 +296,23 @@ a:active {
     height: auto;
     margin: 12px 0;
     box-sizing: border-box;
+    border-radius: 8px;
+}
+
+.project-slide h1 {
+    font-size: 2.2rem;
+    color: #80b3ff;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.project-text a {
+    color: #80b3ff;
+    font-weight: bold;
+    transition: color 0.2s;
+}
+
+.project-text a:hover {
+    color: #aaccff;
 }

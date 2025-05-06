@@ -2,10 +2,8 @@ const buttons = document.querySelectorAll('.tab-button');
 const contents = document.querySelectorAll('.tab-content');
 
 const container = document.getElementById('tab-content-container');
-
 const title = document.getElementById('tab-title');
 const titleFrame = document.querySelector('.title-frame');
-
 
 function getYear() {
     return new Date().getFullYear();
@@ -21,7 +19,6 @@ function setExperience() {
     document.getElementById("unreal-experience").textContent = calculateExperience(2022);
 };
 
-
 function loadTab(tabName, loadInto = '.tab-content-container') {
     const fileToOpen = tabName + '.html';
     console.info('Opening file: ' + fileToOpen);
@@ -29,16 +26,14 @@ function loadTab(tabName, loadInto = '.tab-content-container') {
     const contentContainer = document.querySelector(loadInto);
     contentContainer.classList.remove('show');
 
-    const frame = document.querySelector('.content-frame');
-
     setTimeout(() => {
         fetch(fileToOpen)
         .then(res => res.text())
         .then(html => {
-            frame.style.transition = 'none';
-            frame.style.height = `0px`;
-            void frame.offsetHeight;
-            frame.style.transition = '';
+            // frame.style.transition = 'none';
+            // frame.style.height = `0px`;
+            // void frame.offsetHeight;
+            // frame.style.transition = '';
 
             const tempDiv = document.createElement('div');
             tempDiv.innerHTML = html;
@@ -63,32 +58,29 @@ function loadTab(tabName, loadInto = '.tab-content-container') {
                 setExperience();
             }
 
-            setTimeout(() => {
-                frame.style.height = `${frame.scrollHeight}px`;
-            }, 100);
+            // setTimeout(() => {
+            //     frame.style.height = `${frame.scrollHeight}px`;
+            // }, 100);
         })
         .catch(err => {
             contentContainer.innerHTML = `<p style="color:red;">Failed to load ${tabName}</p>`;
             contentContainer.classList.add('show');
             console.error(err);
         });
-    }, 150);
+    }, 250);
 }
 
 function updateTitle(newText) {
-    titleFrame.style.transition = 'transform 0.3s ease';
-    titleFrame.style.transform = 'translateY(-100%)';
+    titleFrame.classList.add('hidden');
 
     setTimeout(() => {
         title.textContent = newText;
 
         // Wait a bit then bring it back down
         void titleFrame.offsetHeight; // force reflow
-        titleFrame.style.transition = 'transform 0.3s ease';
-        titleFrame.style.transform = 'translateY(0)';
+        titleFrame.classList.remove('hidden');
     }, 300);
 }
-
 
 buttons.forEach(btn => {
   btn.addEventListener('click', () => {
@@ -98,7 +90,10 @@ buttons.forEach(btn => {
     buttons.forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
 
+    // Update title text and animate it
     updateTitle(btn.textContent.trim());
+
+    // Load content
     loadTab(target);
   });
 });
