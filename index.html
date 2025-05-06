@@ -1,47 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portfolio</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tudor Szabo</title>
     <link rel="stylesheet" href="style.css">
-    <script src="script.js"></script>
 </head>
 <body>
-
-
-    <div class="left"></div>
-
-    <div class="right">
-        <h3>Tudor Szabo</h3>
-        <div class="text">
-            Hello, my name is Tudor Szabo.<br>
-            I am a programmer specializing in tools for game development<br>
-            I have experience with a few development platforms and programming languages<br><br>
-                <span id="cpp-experience"></span> years general experience in <a href="https://cppreference.com">C/C++</a><br>
-                <span id="godot-experience"></span> years working on solo projects in <a href="https://www.godotengine.org">Godot</a><br>
-                <span id="unreal-experience"></span> years of team projects with Blueprints and C++ in <a href="https://www.unrealengine.com">Unreal Engine 4/5</a><br>
-                <span id="lua-experience"></span> years working with <a href="https://www.lua.org/">Lua</a> in <a href="https://love2d.org/">Love2d</a><br>
-                <br>
-            I studied game programming for 3 years specializing in engine/tools at <a href="https://www.buas.nl/">BUAS</a>
-            in the <a href="https://www.buas.nl/en/programmes/creative-media-and-game-technologies">CMGT</a> program
-        </div>
-        <h2>My Projects</h2>
-        <div class="icon-buttons">
-            <a href="./magma.html"><img src="assets/magma_text.png" alt="Magma Engine"></a>
-            <a href="./mgmecs.html"><img src="assets/mgmecs_text.png" alt="MGMecs"></a>
-            <a href="./thefinalprint.html"><img src="assets/thefinalprint.png" alt="The Final Print"></a>
-            <a href="./controll.html"><img src="assets/controll.png" alt="Out Of Controll"></a>
+    <div class="container">
+    <!-- Tabs Frame -->
+        <div class="frame tabs-frame">
+            <button class="tab-button active" data-tab="about-me">About Me</button>
+            <button class="tab-button" data-tab="projects">Projects</button>
+            <button class="tab-button" data-tab="prev-work">Previous Work</button>
         </div>
 
-        <h2>Links</h2>
-        <div class="icon-buttons">
-            <a href="https://github.com/szabotudor"><img src="https://github.githubassets.com/assets/GitHub-Mark-ea2971cee799.png" alt="TudorGitHub"></a>
+        <!-- Dynamic Content Frame -->
+        <div class="frame content-frame fade show" id="tab-content-container">
+            <div class="tab-content-container"></div>
         </div>
-
-        <h1>&nbsp;</h1>
     </div>
 
-
+    <script src="script.js"></script>
 </body>
 </html>

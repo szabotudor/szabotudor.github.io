@@ -1,156 +1,97 @@
+
 body {
-    background-color: #cecece;
     margin: 0;
+    font-family: sans-serif;
+    background-color: #121212;
+    color: #e0e0e0;
     display: flex;
-    height: 100vh;
-}
-
-@font-face {
-    font-family: Panton;
-    src: url("assets/fonts/Panton-BlackCaps.otf");
-    font-weight: normal;
-    font-style: normal;
-}
-@font-face {
-    font-family: Antapani;
-    src: url("assets/fonts/Antapani-ExtraBold.otf");
-    font-weight: normal;
-    font-style: normal;
-}
-.left {
-    width: 33%;
-    background: url('assets/passport_photo.jpg') top/cover no-repeat;
-    transition: transform 0.5s ease-in-out;
-}
-.right {
-    width: 67%;
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
     flex-direction: column;
-    padding-top: 20px;
-    text-align: center;
-    transition: transform 0.5s ease-in-out;
-}
-.text {
-    font-family: Antapani;
-    font-size: 1.5rem;
-}
-h1 {
-    font-family: Panton;
-    font-size: 3.5rem;
-    text-align: center;
-    margin: 0;
-    margin-bottom: 100px;
-}
-h2 {
-    font-family: Panton;
-    font-size: 3.5rem;
-    text-align: center;
-    margin-top: 100px;
-}
-h3 {
-    font-family: Panton;
-    font-size: 3.5rem;
-    text-align: center;
-}
-.icon-buttons {
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-    margin-top: 10px;
-}
-.icon-buttons a {
-    width: 120px;
-    height: 120px;
-    display: flex;
     align-items: center;
-    justify-content: center;
-    background-color: #00000000;
-    border-radius: 20px;
-    text-decoration: none;
-    overflow: hidden;
-    border: 5px solid #000000;
-    margin-left: 0px;
-    margin-right: 0px;
-    transition: transform 0.2s ease-in-out, border 0.2s ease-in-out, margin-left 0.3s ease-in-out, margin-right 0.3s ease-in-out;
-}
-.icon-buttons a img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    border-radius: 20px;
-}
-.icon-buttons a:hover {
-    transform: translateY(-5px);
-    background-color: #00000000;
-    border: 20px solid transparent;
-    margin-left: 20px;
-    margin-right: 20px;
-}
-.back-button {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    padding: 10px 20px;
-    font-size: 1.5rem;
-    font-family: Panton;
-    background: none;
-    border: 5px solid #000;
-    border-radius: 20px;
-    text-decoration: none;
-    cursor: pointer;
-}
-.back-button a{
-    color: black;
-    text-decoration: none;
+    padding: 20px;
 }
 
+a {
+    color: #80b3ff;
+    text-decoration: underline;
+    transition: color 0.2s;
+}
 
-/* For project page content */
-.content {
+a:visited {
+    color: #b080ff;
+}
+
+a:hover {
+    color: #aaccff;
+}
+
+a:active {
+    color: #ffffff;
+}
+
+.container {
     width: 80%;
-    margin: auto;
-    padding: 20px 0;
-}
-
-.row {
-    background-color: #e0e0e0;
-    padding: 20px;
-    border-radius: 10px;
+    max-width: 1200px;
     display: flex;
-    align-items: center;
+    flex-direction: column;
     gap: 20px;
-    margin-bottom: 40px;
 }
 
-.row img {
-    width: 40%;
-    height: auto;
-    border-radius: 10px;
-}
-
-.row .text {
-    width: 60%;
-    font-size: 1.5rem;
+.frame {
+    border-radius: 12px;
     padding: 20px;
 }
 
-.reverse {
-    background-color: #b8b8b8;
-    padding: 20px;
-    border-radius: 10px;
-    flex-direction: row-reverse;
-}
-
-.image-container {
+.tabs-frame {
+    width: auto;
     display: flex;
-    flex-direction: column; /* Stack images vertically */
-    gap: 20px; /* Space between images */
+    gap: 10px;
+    padding: 10px;
+    justify-content: center;
 }
 
-.image-container img {
-    width: 100%; /* Make both images the same width */
+.tab-button {
+    background-color: #2a2a2a;
+    border: 1px solid #3a3a3a;
+    border-radius: 8px;
+    color: #e0e0e0;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.tab-button.active {
+    background-color: #3a3a3a;
+    border-color: #4a4a4a;
+}
+
+.tab-button:hover {
+    background-color: #333;
+}
+
+.content-frame {
+    overflow: hidden;
     height: auto;
-    border-radius: 10px;
+    transition: height 0.5s ease;
+}
+
+.content-frame.show {
+    height: auto;
+}
+
+.tab-content {
+    display: none;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+
+.tab-content-container {
+    opacity: 0;
+    transition: opacity 0.5s ease;
+}
+
+.tab-content-container.show {
+    opacity: 1;
 }
