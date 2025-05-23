@@ -1,41 +1,104 @@
 <div class="project-slide">
     <h1>Magma Engine</h1>
 
-    <img class="project-img" src="./assets/magma/editor.png" alt="Editor Screenshot">
-
-    <div class="project-text">
-        <a href="https://github.com/szabotudor/magma" target="_blank">Magma Engine</a> is a custom game engine written in C/C++. It uses ImGui for the editor interface, which makes it extendable with custom plugins and add-ons. Powering the engine is the SystemManager, designed to allow adding or modifying systems within the engine.
+    <div class="fancy-box" alt="about">
+        <div class="project-text">
+            <a href="https://github.com/szabotudor/magma" target="_blank">Magma Engine</a> is a custom game engine written in C/C++.<br>
+            It uses ImGui for the editor interface, which makes it extendable with custom plugins and add-ons.<br>
+            Powering the engine is the SystemManager, designed to allow adding or modifying systems within the engine.<br>
+            The main systems are as follows:<br>
+            <ul>
+                <li><a href="#system-manager">SystemManager</a></li>
+                <li><a href="#editor">Editor</a></li>
+                <li><a href="#editor-windows">Editor Windows</a></li>
+                <li><a href="#ecs">EntityComponentSystem</a></li>
+            </ul>
+        </div>
+        <div class="image-group">
+            <img src="./assets/magma/editor.png" alt="Editor Screenshot">
+        </div>
     </div>
 
-    <img class="project-img" src="assets/magma/notifs.png" alt="Notification System Screenshot">
-    <img class="project-img" src="assets/magma/create-systems.png" alt="Create Systems Screenshot">
-
-    <div class="project-text">
-        The SystemManager makes creating new systems a simple task. You can create a class inheriting from the System base and add it to the engine.
+    <div class="fancy-box" id="system-manager">
+        <div class="project-text">
+            The SystemManager requires that systems added to it inherit publicly from the <a href="#system-class">System</a> class<br><br>
+            In the background, on the most basic level, it just adds the system to a vector of System base pointers<br><br>
+            It's made to handle boilerplate, utilities and other quality-of-life features for systems, like multithreading or setting up the first layer of reflection that the engine provides<br><br>
+            The SystemManager does more than just list systems. It can also handle more advanced behaviors like <a href="#replace-systems">Replacing Systems</a>
+        </div>
+        <div class="image-group">
+            <img src="./assets/magma/create-system.png" alt="CreateSystemFunction">
+        </div>
     </div>
 
-    <img class="project-img" src="assets/magma/better-notifs.png" alt="Better Notifications">
-    <img class="project-img" src="assets/magma/replace-system.png" alt="Replace Systems">
-
-    <div class="project-text">
-        Replace existing systems at any time without requiring the system to update functions. Don’t like the renderer or ECS? Swap it out effortlessly.
+    <div class="fancy-box" id="system-class">
+        <div class="project-text">
+            Creating a system, the class just needs to inherit from the System class and implement a default constructor<br><br>
+            Optionally, each of the special system functions (update, begin_play, end_play etc) can be overwritten to add functionality
+        </div>
+        <div class="image-group">
+            <img src="./assets/magma/notifs.png" alt="NotifsSystemManagerShowcase">
+            <img src="./assets/magma/create-systems.png" alt="CreateSomeSystems">
+        </div>
     </div>
 
-    <img class="project-img" src="assets/magma/editor-windows.png" alt="Editor Windows">
-
-    <div class="project-text">
-        Magma has an API for creating custom editor windows, allowing users to extend the editor interface as needed.
+    <div class="fancy-box" id="replace-systems">
+        <div class="project-text">
+            Replacing systems is simple<br>
+            It only requires that the replacement inherits from the original, and that it implements a conversion move constructor<br><br>
+            Existing functions can be overwritten and new functions can be added, and accessing the system is done the same way as normal systems
+        </div>
+        <div class="image-group">
+            <img src="./assets/magma/better-notifs.png" alt="BetterNotifs">
+            <img src="./assets/magma/replace-system.png" alt="ReplaceNotifs">
+        </div>
     </div>
 
-    <img class="project-img" src="assets/magma/works-on-linux.png" alt="Linux Support">
 
-    <div class="project-text">
-        Multi-platform support ensures that Magma works on both Windows and Linux. Porting it to other platforms is easy thanks to its modularity.
+    <div class="fancy-box" id="editor">
+        <div class="project-text">
+            Placeholder Editor
+        </div>
+        <div class="image-group">
+            <img src="" alt="Editor2">
+        </div>
     </div>
 
-    <img class="project-img" src="assets/magma/engine-files.png" alt="File Structure">
-
-    <div class="project-text">
-        The engine’s backend is abstracted and easily replaceable. For example, changing the graphics/compute backend is as simple as swapping out the backend library.
+    <div class="fancy-box" id="editor-windows">
+        <div class="project-text">
+            Placeholder Editor Windows
+        </div>
+        <div class="image-group">
+            <img src="" alt="Editor2">
+        </div>
     </div>
+
+
+    <div class="fancy-box">
+        <div class="project-text">
+            Magma has an API for creating custom editor windows, allowing users to extend the editor interface as needed.
+        </div>
+        <div class="image-group">
+            <img src="assets/magma/editor-windows.png" alt="Editor Windows">
+        </div>
+    </div>
+
+    <div class="fancy-box">
+        <div class="project-text">
+            Multi-platform support ensures that Magma works on both Windows and Linux. Porting it to other platforms is easy thanks to its modularity.
+        </div>
+        <div class="image-group">
+            <img src="assets/magma/works-on-linux.png" alt="Linux Support">
+        </div>
+    </div>
+
+    <div class="fancy-box">
+        <div class="project-text">
+            The engine’s backend is abstracted and easily replaceable. For example, changing the graphics/compute backend is as simple as swapping out the backend library.
+        </div>
+        <div class="image-group">
+            <img src="assets/magma/engine-files.png" alt="File Structure">
+        </div>
+    </div>
+
 </div>
