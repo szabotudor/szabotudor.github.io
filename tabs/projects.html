@@ -1,15 +1,112 @@
-<div class="projects-container">
-    <button style="z-index: 2;" id="prev-project" disabled>⯇</button>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tudor Szabo</title>
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
 
-    <div class="project-slider">
-        <!-- Projects will be loaded and inserted here -->
+
+<div class="content nice-link">
+    <div class="frame tabs-frame">
+        <a href="../index.html" class="tab-button">
+            <i class="fas fa-user"></i> About Me
+        </a>
+        <a class="tab-button active">
+            <i class="fas fa-project-diagram"></i> Projects
+        </a>
+        <a href="./prev-work.html" class="tab-button">
+            <i class="fas fa-briefcase"></i> Previous Work
+        </a>
     </div>
 
-    <button style="z-index: 2;" id="next-project" disabled>⯈</button>
+
+    <div class="wide-button">
+        <img src="your-image.jpg" alt="Preview">
+        <div class = "wide-button-text">
+            <a href="./projects/mgmath.html">MGMath</a>
+            <ul>
+                <li>Vector+Matrix Math Library</li>
+                <li>C/C++</li>
+                <li>Solo Project</li>
+                <li>Single-Header Library for C++17</li>
+                <li><a href="https://github.com/szabotudor/mgmath">GitHub</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="wide-button">
+        <img src="your-image.jpg" alt="Preview">
+        <div class = "wide-button-text">
+            <a href="./projects/thefinalprint.html">The Final Print</a>
+            <ul>
+                <li>Video Game (Adventure, Detective, Noir, Puzzle, Mystery)</li>
+                <li>Unreal 5, Blueprints, C++, WWise</li>
+                <li>Team Project - 24 team members</li>
+                <li>My Work: , Programming Lead</li>
+                <li>Windows (and linux/steam deck through Proton)</li>
+                <li><a href="https://store.steampowered.com/app/3365840/The_Final_Print/">Steam Page</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="wide-button">
+        <img src="your-image.jpg" alt="Preview">
+        <div class="wide-button-text">
+            <a href="./projects/magma.html">MagmaEngine</a>
+            <ul>
+                <li>Custom engine written in C++ focused on modularity</li>
+                <li>C/C++, OpenGL, <a href="https://github.com/ocornut/imgui">ImGUI</a></li>
+                <li>Solo Project</li>
+                <li>Multi-Platform Support (linux, windows)</li>
+                <li><a href="https://github.com/szabotudor/magma">GitHub</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="wide-button">
+        <img src="your-image.jpg" alt="Preview">
+        <div class = "wide-button-text">
+            <a href="./projects/marisol.html">Marisol</a>
+            <ul>
+                <li>Video Game (Action Adventure, Eye Candy)</li>
+                <li>Unreal 5, Lumen+Nanite, Blueprints, C++</li>
+                <li>Team Project - 21 team members</li>
+                <li>My Work: Enemy AI</li>
+                <li>Windows</li>
+                <li><a href="https://buas.itch.io/marisol">Itch.io Page</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="wide-button">
+        <img src="your-image.jpg" alt="Preview">
+        <div class = "wide-button-text">
+            <a href="./projects/mgmecs.html">MGMEcs</a>
+            <ul>
+                <li>Entity Component System With Multithreading Support</li>
+                <li>C/C++</li>
+                <li>Solo Project</li>
+                <li>Single-Header Library for C++17</li>
+                <li><a href="https://github.com/szabotudor/mgmecs">GitHub</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="wide-button">
+        <img src="your-image.jpg" alt="Preview">
+        <div class = "wide-button-text">
+            <a href="./projects/controll.html">Out of Controll</a>
+            <ul>
+                <li>Video Game (Action, Racing, Arcade, Kart-Racer, Car Combat)</li>
+                <li>Unreal 5, Blueprints</li>
+                <li>Team project - 11 Team Members</li>
+                <li>My Work: Custom Car Physics, Programming Lead</li>
+                <li>Single-Header Library for C++17</li>
+                <li><a href="https://noorwool.itch.io/out-of-controll">Itch.io Page</a></li>
+            </ul>
+        </div>
+    </div>
 </div>
-
-<!-- Specify projects to preload -->
-<div class="project-preload" data-tab="./tabs/projects/magma.html"></div>
-<div class="project-preload" data-tab="./tabs/projects/mgmecs.html"></div>
-
-<script src="../tabs/subscript.js"></script>

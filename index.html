@@ -7,32 +7,42 @@
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
-<body>
-    <div class="container">
-        <!-- Tabs Frame -->
-        <div class="frame tabs-frame">
-            <button class="tab-button active" data-tab="./tabs/about-me">
-                <i class="fas fa-user"></i> About Me
-            </button>
-            <button class="tab-button" data-tab="./tabs/projects">
-                <i class="fas fa-project-diagram"></i> Projects
-            </button>
-            <button class="tab-button" data-tab="./tabs/prev-work">
-                <i class="fas fa-briefcase"></i> Previous Work
-            </button>
-        </div>
 
-        <!-- Title Frame -->
-        <div class="frame title-frame slide">
-            <h2 id="tab-title">About Me</h2>
+
+<body>
+    <div class="container nice-link">
+        <!-- Tabs Frame -->
+        <div class="tabs-frame">
+            <a class="tab-button active">
+                <i class="fas fa-user"></i> About Me
+            </a>
+            <a href="./tabs/projects.html" class="tab-button">
+                <i class="fas fa-project-diagram"></i> Projects
+            </a>
+            <a href="./tabs/prev-work.html" class="tab-button">
+                <i class="fas fa-briefcase"></i> Previous Work
+            </a>
         </div>
 
         <!-- Dynamic Content Frame -->
-        <div class="frame content-frame fade show" id="tab-content-container">
-            <div class="tab-content-container"></div>
+        <div class="frame content-frame" id="tab-content-container">
+            <div class="intro-container">
+                <img src="./assets/photo.jpg" class="profile-img" alt="Tudor Szabo">
+                <div class="intro-text">
+                    My name is Tudor Szabo.<br>
+                    I am a programmer specializing in tools for game development.<br>
+                    I worked in teams between 3 to 24 people, as well as solo projects<br>
+                    I have experience with multiple development platforms and programming languages.
+
+                    <p><span id="cpp-experience">8</span> years general experience in <a href="https://cppreference.com">C/C++</a></p>
+                    <p><span id="godot-experience">6</span> years working on solo projects in <a href="https://www.godotengine.org">Godot</a></p>
+                    <p><span id="unreal-experience">3</span> years of team projects with Blueprints and C++ in <a href="https://www.unrealengine.com">Unreal Engine 4/5</a></p>
+                    <p><span id="lua-experience">2</span> years working with <a href="https://www.lua.org/">Lua</a> in <a href="https://love2d.org/">Love2d</a></p>
+
+                    I've been studying game programming for 3 years specializing in engine/tools at <a href="https://www.buas.nl/">BUAS</a> in the <a href="https://www.buas.nl/en/programmes/creative-media-and-game-technologies">CMGT</a> program.
+                </div>
+            </div>
         </div>
     </div>
-
-    <script src="script.js"></script>
 </body>
 </html>

@@ -31,6 +31,7 @@ a:active {
     color: #ffffff;
 }
 
+
 /* ------------------------------------------------------------------- */
 /* Content Styling Section */
 .content {
@@ -74,22 +75,22 @@ a:active {
     font-weight: bold;
 }
 
-.intro-text p {
+.nice-link p {
     margin-bottom: 15px;
 }
 
-.intro-text a {
+.nice-link a {
     color: #80b3ff;
     text-decoration: none;
     font-weight: bold;
 }
 
-.intro-text a:hover {
+.nice-link a:hover {
     color: #aaccff;
     text-decoration: underline;
 }
 
-.intro-text span {
+.nice-link span {
     font-weight: bolder;
     color: rgb(165, 246, 181);
 }
@@ -112,6 +113,7 @@ a:active {
     }
 }
 
+
 /* ------------------------------------------------------------------- */
 /* Container for Pages */
 .container {
@@ -121,6 +123,7 @@ a:active {
     flex-direction: column;
     gap: 30px;
 }
+
 
 /* ------------------------------------------------------------------- */
 /* Title Frame (Animated) */
@@ -139,18 +142,20 @@ a:active {
     opacity: 0;
 }
 
+
 /* ------------------------------------------------------------------- */
 /* Tabs Section */
 .tabs-frame {
-    width: auto;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw; /* full viewport width */
     display: flex;
     gap: 20px;
     padding: 15px 30px;
     justify-content: center;
     background-color: #333333;
-    border-radius: 8px;
     z-index: 2;
-    position: fixed;
 }
 
 .tab-button {
@@ -186,16 +191,14 @@ a:active {
     outline: none;
 }
 
+
 /* ------------------------------------------------------------------- */
 /* Content Frame */
 .content-frame {
     overflow: hidden;
     height: auto;
+    padding-top: 100px;
     transition: height 0.5s ease;
-}
-
-.content-frame.show {
-    height: auto;
 }
 
 .tab-content {
@@ -271,13 +274,6 @@ a:active {
     display: flex;
     transition: transform 0.5s ease;
     width: 100%;
-}
-
-.project-slide {
-    flex-shrink: 0;
-    width: 100%;
-    box-sizing: border-box;
-    padding: 16px;
 }
 
 .project {
@@ -396,4 +392,69 @@ a:active {
     transform: scale(1.02);
     z-index: 10;
     box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+}
+
+
+/* ------------------------------------------------------------------- */
+/* Wide Buttons (Project Buttons) */
+.wide-button {
+    display: flex;
+    align-items: stretch;
+    width: 100%;
+    border-radius: 16px;
+    padding: 2px;
+    position: relative;
+    overflow: hidden;
+    text-decoration: none;
+    color: inherit;
+    margin-bottom: 20px;
+    box-sizing: border-box;
+    background: #2a2a2a;
+    transition: background 1.0s ease-in-out, transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.wide-button:hover {
+    transform: scale(1.01);
+    box-shadow: 0 0 15px rgba(128, 179, 255, 0.3);
+    background: #5a6464;
+    transition: background 1.0s ease-in-out;
+}
+
+.wide-button img {
+    aspect-ratio: 1;
+    width: 100%;
+    max-width: 20%;
+    object-fit: cover;
+    border-right: 2px solid #3a3a3a;
+    border-radius: 14px 0 0 14px;
+    z-index: 1;
+}
+
+.wide-button-text {
+    flex: 1;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-color: #2a2a2a;
+    border-radius: 0 14px 14px 0;
+    z-index: 1;
+}
+
+.wide-button-text h2 {
+    margin: 0 0 10px 0;
+    font-size: 1.4rem;
+    color: #80b3ff;
+}
+
+.wide-button-text ul {
+    margin: 0;
+    padding-left: 1.2em;
+    font-size: 1rem;
+    font-weight: bold;
+    line-height: 1.6;
+}
+
+.wide-button-text li {
+    margin-bottom: 6px;
 }
