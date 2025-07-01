@@ -3,9 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Final Print</title>
+    <title>Tudor Szabo - Projects - MGMath</title>
     <link rel="stylesheet" href="../../style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <link rel="stylesheet" href="./highlight/prism.css">
 </head>
 
 <div class="content nice-link">
@@ -14,7 +16,7 @@
         <a href="../../index.html" class="tab-button">
             <i class="fas fa-user"></i> About Me
         </a>
-        <a href="../projects.html" class="tab-button active">
+        <a href="../projects.html" class="tab-button">
             <i class="fas fa-project-diagram"></i> Projects
         </a>
         <a href="../prev-work.html" class="tab-button">
@@ -26,4 +28,67 @@
     <h1>
         MGMath
     </h1>
+
+    <div class="fancy-box">
+        <div class="project-text">
+            <a href="https://github.com/szabotudor/mgmath">MGMath</a> is a vector/matrix math library for C++17.<br><br>
+            Its advantage over other similar libraries is the modular, simple, extensible design.<br><br>
+            Everything is in a single header, all of the components use a similar structure, so any extensions are trivial to implement.
+        </div>
+        <div class="image-group">
+            <pre style="background-color: inherit; font-size: 80%;"><code class="language-cpp">
+// Define vectors using the default template class
+mgm::vec&lt;3, float&gt; v0 = { 1.0f, 2.0f, 3.0f };
+
+// Define vectors using aliases
+// (vec3f is short for vec&lt;3, float&gt;)
+mgm::vec3f v1 = v0;
+
+// There are plenty of aliases
+// vec4u8 works well for 32-bit rgba colors
+vec4u8 v2 = { 255, 100, 100, 255 };
+            </code></pre>
+        </div>
+    </div>
+
+    <div class="fancy-box">
+        <div class="project-text">
+            The main selling point of the library is its modularity.<br>
+            The actual storage for the xyz components of the vector is abstracted.<br>
+            This way, everything can be exposed to users through the same templated class.
+        </div>
+        <div class="image-group">
+            <pre style="background-color: inherit; font-size: 80%;"><code class="language-cpp">
+template&lt;size_t S, class T&gt;
+class vec : public vec_storage&lt;S, T&gt;
+            </code></pre>
+        </div>
+    </div>
+
+    <div class="fancy-box">
+        <div class="project-text">
+            Just this simple aspect alone, makes it trivial to write generalized tools that work for any possible vector size
+        </div>
+        <div class="image-group">
+            <pre style="background-color: inherit; font-size: 80%;"><code class="language-cpp">
+template&lt;size_t S, typename T&gt;
+SerializedData&lt;vec&lt;S, T&gt;&gt; serialize(const vec&lt;S, T&gt;& v) {
+    SerializedData&lt;vec&lt;S, T&gt;&gt; res{};
+
+    res["x"] = v.x;
+
+    if constexpr (S &gt;= 2)
+        res["y"] = v.y;
+    if constexpr (S &gt;= 3)
+        res["z"] = v.z;
+    if constexpr (S &gt;= 4)
+        res["w"] = v.w;
+
+    return res;
+}
+            </code></pre>
+        </div>
+    </div>
+
+    <script src="./highlight/prism.js"></script>
 </div>
