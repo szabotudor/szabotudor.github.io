@@ -390,6 +390,18 @@ a:active {
     z-index: 1;
 }
 
+.wide-button .preview-code {
+    aspect-ratio: 2;
+    width: 100%;
+    max-width: 40%;
+    height: 100%;
+    max-height: 100%;
+    object-fit: cover;
+    border-right: 2px solid #3a3a3a;
+    border-radius: 14px 0 0 14px;
+    z-index: 1;
+}
+
 .wide-button-text {
     flex: 1;
     padding: 20px;

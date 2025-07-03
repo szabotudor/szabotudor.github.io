@@ -6,6 +6,8 @@
     <title>Tudor Szabo - Projects</title>
     <link rel="stylesheet" href="../style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <link rel="stylesheet" href="./projects/highlight/prism.css">
 </head>
 
 
@@ -25,7 +27,17 @@
 
 
     <div class="wide-button" onclick="window.location.href='./projects/mgmath.html'">
-        <img src="your-image.jpg" alt="Preview">
+        <!-- <img src="your-image.jpg" alt="Preview"> -->
+        <div class="preview-code">
+            <pre style="background-color: inherit; font-size: 80%;"><code class="language-cpp">
+using namespace mgm;
+quatf rot = quatf::from_angle_safe({1.0f, 0.0f, 0.0f}, pi / 2.0f);
+vec3f v0 {0.0f, 1.0f, 0.0f};
+vec3f v1 = rot.rotate_safe(v0);
+assert((v1 == {0.0f, 0.0f, 1.0f}) && "This is mgmath!");
+
+            </code></pre>
+        </div>
         <div class = "wide-button-text">
             <a class="floating-text" href="./projects/mgmath.html">MGMath</a>
             <ul>
@@ -110,4 +122,6 @@
             </ul>
         </div>
     </div>
+
+    <script src="./projects/highlight/prism.js"></script>
 </div>
