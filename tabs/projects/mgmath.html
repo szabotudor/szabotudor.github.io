@@ -33,7 +33,7 @@
         <div class="project-text">
             <a href="https://github.com/szabotudor/mgmath">MGMath</a> is a vector/matrix math library for C++17.<br><br>
             Its advantage over other similar libraries is the modular, simple, extensible design.<br><br>
-            Everything is in a single header, all of the components use a similar structure, so any extensions are trivial to implement.
+            Everything is in a single header, and all of the components use a similar structure, so any extensions are trivial to implement.
         </div>
         <div class="image-group">
             <pre style="background-color: inherit; font-size: 80%;"><code class="language-cpp">
@@ -55,19 +55,38 @@ vec4u8 v2 = { 255, 100, 100, 255 };
         <div class="project-text">
             The main selling point of the library is its modularity.<br>
             The actual storage for the xyz components of the vector is abstracted.<br>
-            This way, everything can be exposed to users through the same templated class.
+            This way, everything can be exposed to users through the same templated class.<br><br>
+            This makes generic implementations in the actual vector class a lot easier.<br>
+            By extension, the development of the library is also easier and faster, because functions or components don't need to be specialized (unless necessary for some specific case for example optimizations).
         </div>
         <div class="image-group">
             <pre style="background-color: inherit; font-size: 80%;"><code class="language-cpp">
-template&lt;size_t S, class T&gt;
-class vec : public vec_storage&lt;S, T&gt;
+// Generic vec_storage template for sizes &gt;= 5
+template&lt;size_t S, typename T&gt;
+class vec_storage {
+public:
+    T _data[S];
+};
+
+// Example of specialized implementation, for size 4
+template&lt;typename T&gt;
+class vec_storage&lt;4, T&gt; {
+public:
+    T x, y, z, w;
+};
+
+// Actual vector class
+template&lt;size_t S, typename T&gt;
+class vec : public vec_storage&lt;S, T&gt; {};
             </code></pre>
         </div>
     </div>
 
     <div class="fancy-box">
         <div class="project-text">
-            Just this simple aspect alone, makes it trivial to write generalized tools that work for any possible vector size
+            This aspect makes it easy to write generalized tools for any vector size, again without specializations<br><br>
+            For example, this function, which serializes a vector into a json object and returns it.<br><br>
+            This is different from other math libraries, like <a href="https://github.com/g-truc/glm">glm</a>, where although code like this is possible to write, because many vector types are manually specialized, it makes development of generic code like this much harder.
         </div>
         <div class="image-group">
             <pre style="background-color: inherit; font-size: 80%;"><code class="language-cpp">
@@ -75,14 +94,22 @@ template&lt;size_t S, typename T&gt;
 SerializedData&lt;vec&lt;S, T&gt;&gt; serialize(const vec&lt;S, T&gt;& v) {
     SerializedData&lt;vec&lt;S, T&gt;&gt; res{};
 
-    res["x"] = v.x;
+    if constexpr (S > 4) {
+        // If vectors are too big to have xyzw components, save it as an array
+        for (int i = 0; i < S; ++i)
+            res.as_array().push_back(v[i]);
+    }
+    else {
+        // For sizes of 4 or less, save vector data in named keys
+        res["x"] = v.x;
 
-    if constexpr (S &gt;= 2)
-        res["y"] = v.y;
-    if constexpr (S &gt;= 3)
-        res["z"] = v.z;
-    if constexpr (S &gt;= 4)
-        res["w"] = v.w;
+        if constexpr (S &gt;= 2)
+            res["y"] = v.y;
+        if constexpr (S &gt;= 3)
+            res["z"] = v.z;
+        if constexpr (S &gt;= 4)
+            res["w"] = v.w;
+    }
 
     return res;
 }
