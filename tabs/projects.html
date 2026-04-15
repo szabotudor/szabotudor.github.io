@@ -1,11 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Tudor Szabo - Projects</title>
     <link rel="stylesheet" href="../style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+        integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <link rel="stylesheet" href="./projects/highlight/prism.css">
 </head>
@@ -26,36 +29,13 @@
     </div>
 
 
-    <div class="wide-button" onclick="window.location.href='./projects/mgmath.html'">
-        <!-- <img src="your-image.jpg" alt="Preview"> -->
-        <div class="preview-code">
-            <pre style="background-color: inherit; font-size: 80%;"><code class="language-cpp">
-using namespace mgm;
-quatf rot = quatf::from_angle_safe({1.0f, 0.0f, 0.0f}, pi / 2.0f);
-vec3f v0 {0.0f, 1.0f, 0.0f};
-vec3f v1 = rot.rotate_safe(v0);
-assert((v1 == {0.0f, 0.0f, 1.0f}) && "This is mgmath!");
-            </code></pre>
-        </div>
-        <div class = "wide-button-text">
-            <a class="floating-text" href="./projects/mgmath.html">MGMath</a>
-            <ul>
-                <li>Vector+Matrix Math Library</li>
-                <li>C/C++</li>
-                <li>Solo Project</li>
-                <li>Single-Header Library for C++17</li>
-                <li><a href="https://github.com/szabotudor/mgmath">GitHub</a></li>
-            </ul>
-        </div>
-    </div>
-
     <div class="wide-button" onclick="window.location.href='./projects/thefinalprint.html'">
         <img src="../assets/tfp-steam.png" alt="Preview">
-        <div class = "wide-button-text">
+        <div class="wide-button-text">
             <a class="floating-text" href="./projects/thefinalprint.html">The Final Print</a>
             <ul>
                 <li>Video Game (Adventure, Detective, Noir, Puzzle, Mystery)</li>
-                <li>Unreal 5, Blueprints, C++, WWise, ImGui</li>
+                <li>Unreal 5, Blueprints, C++, WWise, ImGui, Jenkins</li>
                 <li>Team Project - 24 team members</li>
                 <li>My Work: Programming Lead, Engine Tools</li>
                 <li>Windows (and linux/steam deck through Proton)</li>
@@ -64,23 +44,9 @@ assert((v1 == {0.0f, 0.0f, 1.0f}) && "This is mgmath!");
         </div>
     </div>
 
-    <div class="wide-button" onclick="window.location.href='./projects/magma.html'">
-        <img src="your-image.jpg" alt="Preview">
-        <div class="wide-button-text">
-            <a class="floating-text" href="./projects/magma.html">MagmaEngine</a>
-            <ul>
-                <li>Custom engine written in C++ focused on modularity</li>
-                <li>C/C++, OpenGL, ImGUI</li>
-                <li>Solo Project</li>
-                <li>Multi-Platform Support (linux, windows)</li>
-                <li><a href="https://github.com/szabotudor/magma">GitHub</a></li>
-            </ul>
-        </div>
-    </div>
-
     <div class="wide-button" onclick="window.location.href='./projects/marisol.html'">
-        <img src="your-image.jpg" alt="Preview">
-        <div class = "wide-button-text">
+        <img src="../assets/marisol.png" alt="Preview">
+        <div class="wide-button-text">
             <a class="floating-text" href="./projects/marisol.html">Marisol</a>
             <ul>
                 <li>Video Game (Action Adventure, Eye Candy)</li>
@@ -93,9 +59,46 @@ assert((v1 == {0.0f, 0.0f, 1.0f}) && "This is mgmath!");
         </div>
     </div>
 
+    <div class="wide-button" onclick="window.location.href='./projects/mgmath.html'">
+        <!-- <img src="your-image.jpg" alt="Preview"> -->
+        <div class="preview-code">
+            <pre style="background-color: inherit; font-size: 80%;"><code class="language-cpp">
+using namespace mgm;
+quatf rot = quatf::from_angle_safe({1.0f, 0.0f, 0.0f}, pi / 2.0f);
+vec3f v0 {0.0f, 1.0f, 0.0f};
+vec3f v1 = rot.rotate_safe(v0);
+assert((v1 == {0.0f, 0.0f, 1.0f}) && "This is mgmath!");
+            </code></pre>
+        </div>
+        <div class="wide-button-text">
+            <a class="floating-text" href="./projects/mgmath.html">MGMath</a>
+            <ul>
+                <li>Vector+Matrix Math Library</li>
+                <li>C/C++</li>
+                <li>Solo Project</li>
+                <li>Single-Header Library for C++17</li>
+                <li><a href="https://github.com/szabotudor/mgmath">GitHub</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="wide-button" onclick="window.location.href='./projects/magma.html'">
+        <img src="../assets/magma_text.png" alt="Preview">
+        <div class="wide-button-text">
+            <a class="floating-text" href="./projects/magma.html">MagmaEngine</a>
+            <ul>
+                <li>Custom engine written in C++ focused on modularity</li>
+                <li>C/C++, OpenGL, ImGUI</li>
+                <li>Solo Project</li>
+                <li>Multi-Platform Support (linux, windows)</li>
+                <li><a href="https://github.com/szabotudor/magma">GitHub</a></li>
+            </ul>
+        </div>
+    </div>
+
     <div class="wide-button" onclick="window.location.href='./projects/mgmecs.html'">
         <img src="your-image.jpg" alt="Preview">
-        <div class = "wide-button-text">
+        <div class="wide-button-text">
             <a class="floating-text" href="./projects/mgmecs.html">MGMEcs</a>
             <ul>
                 <li>Entity Component System With Multithreading Support</li>
@@ -109,7 +112,7 @@ assert((v1 == {0.0f, 0.0f, 1.0f}) && "This is mgmath!");
 
     <div class="wide-button" onclick="window.location.href='./projects/controll.html'">
         <img src="your-image.jpg" alt="Preview">
-        <div class = "wide-button-text">
+        <div class="wide-button-text">
             <a class="floating-text" href="./projects/controll.html">Out of Controll</a>
             <ul>
                 <li>Video Game (Action, Racing, Arcade, Kart-Racer, Car Combat)</li>
