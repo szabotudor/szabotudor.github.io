@@ -114,10 +114,110 @@ match device.platform()? {
     Platform::Host    =&gt; { /* no packaging needed */ }
 }</code></pre>
 
+        <h2>Auto-Updater</h2>
+
+        <p>
+            Every bonk invocation silently checks GitHub for a newer version — at most once per hour, so it never slows down the build. Authentication uses the GitHub OAuth device flow: bonk prints a short code and a URL, the user approves it in a browser once, and the token is stored and refreshed automatically for up to 6 months.
+        </p>
+        <p>
+            When an update is found, bonk prompts inline with three choices: apply it, skip it, or view the changelog first. Saying no offers to ignore that version until the next one ships.
+        </p>
+
+        <pre style="background-color: #2a2a2a; border-radius: 8px; padding: 16px; font-size: 0.9rem; overflow-x: auto; margin: 24px 0;"><code class="language-bash">$ bonk build --device host
+Update available: v0.1.11 -> v0.1.12
+Would you like to apply it [Y/n/v (View Changelog)]: v
+
+## v0.1.12
+- Fix adb device detection on Android 14
+- Add Epic Games Store publishing support
+
+Would you like to apply it [Y/n/v (View Changelog)]: y
+Updating bonk in cargo root `/home/tudor/.cargo`
+   Compiling bonk v0.1.12 ...
+Update successful! Press &lt;Return&gt; to continue</code></pre>
+
+        <p>
+            On Windows, a running executable cannot be replaced in-place. To work around this, bonk copies itself to a temporary <code>update-bonk</code> binary and spawns that copy to run the actual <code>cargo install</code>, so the original binary is no longer held open when it gets overwritten.
+        </p>
+
+        <pre style="background-color: #2a2a2a; border-radius: 8px; padding: 16px; font-size: 0.9rem; overflow-x: auto; margin: 24px 0;"><code class="language-rust">if want_update {
+    // On Windows, a running executable can't be replaced in-place.
+    // Copy bonk to a temp name and spawn the copy to do the install.
+    let temp_updater = cargo_root.join(format!("bin/{}", exe!("update-bonk")));
+    std::fs::copy(
+        cargo_root.join(format!("bin/{}", exe!("bonk"))),
+        &temp_updater,
+    )?;
+    std::process::Command::new(temp_updater)
+        .args(["--run-update-version", &latest.version_number])
+        .spawn()?;
+}</code></pre>
+
+        <h2>Interactive Manifest Browser</h2>
+
+        <p>
+            bonk projects are configured through a manifest file. Rather than documenting every field separately, <code>bonk manifest</code> opens an interactive terminal browser generated directly from the Rust config types using <code>schemars</code>.
+        </p>
+        <p>
+            At startup, bonk derives a full JSON schema from <code>RawConfig</code> at compile time. The manifest command then walks that schema recursively — resolving <code>$ref</code> pointers, unwrapping <code>anyOf</code>/<code>oneOf</code> variants, and distinguishing optional fields from required ones — and builds a navigable tree from it.
+        </p>
+
+        <pre style="background-color: #2a2a2a; border-radius: 8px; padding: 16px; font-size: 0.9rem; overflow-x: auto; margin: 24px 0;"><code class="language-rust">// Derive a full JSON schema from the config types at compile time
+let full_schema = schemars::schema_for!(RawConfig).to_value();
+
+// Walk the schema and build an interactive tree
+let mut renderer = TreeRenderer::&lt;ManifestProperty&gt;::default();
+generate_ui(&mut renderer.tree, &full_schema, root_node, &full_schema, "the manifest")?;
+
+// Run the keyboard-navigable terminal UI
+renderer.run()?;</code></pre>
+
+        <p>
+            Each node in the tree is a <code>ManifestProperty</code> — a field name, its inferred type, and its description pulled from the schema. Navigating to a property expands it inline to show type and description without leaving the terminal. Because the UI is generated from the schema, it always stays in sync with the actual config format.
+        </p>
+
+        <pre style="background-color: #2a2a2a; border-radius: 8px; padding: 16px; font-size: 0.9rem; overflow-x: auto; margin: 24px 0;"><code class="language-rust">// The schema introspection trait — extracts type info from raw JSON schema nodes
+impl CheckItemType for serde_json::Value {
+    fn try_get_type(&self) -> Result&lt;Option&lt;ItemType&gt;&gt; {
+        if self.get("oneOf").is_some_and(|t| t.is_array()) {
+            Ok(Some(ItemType::OneOf))
+        } else if let Some(ty) = self.get("type") {
+            // Distinguish plain types, arrays, and optional (null | T) fields
+            if ty.is_array() {
+                return try_any_of_or_optional(/* ... */);
+            }
+            Ok(Some(ItemType::Type(ty.as_str().unwrap().to_string())))
+        } else if let Some(sref) = self.get("$ref") {
+            // Resolve references like "#/$defs/AndroidConfig" to the type name
+            Ok(Some(ItemType::Type(
+                sref.as_str().unwrap().split('/').next_back().unwrap().to_string()
+            )))
+        } else {
+            Ok(None)
+        }
+    }
+}</code></pre>
+
         <h2>Multi-Store Publishing</h2>
 
         <p>
-            Beyond building, bonk can publish directly to Google Play, Apple App Store, Steam, Microsoft Store, Epic Games Store, and more. Credentials and signing keys are managed through bonk's settings, so the full build-sign-publish pipeline is a single command.
+            Beyond building, bonk can publish directly to Google Play, Apple App Store, Steam, Microsoft Store, Epic Games Store, and Vivo. Each store is a subcommand — <code>bonk publish steam</code>, <code>bonk publish apple</code>, <code>bonk publish play-store</code>, and so on.
+        </p>
+        <p>
+            Credentials can be passed three ways: inline as a string, read from a file, or pulled from an environment variable. The same <code>PublishToken</code> type handles all three, so CI pipelines and local setups both work without changing the manifest.
+        </p>
+
+        <pre style="background-color: #2a2a2a; border-radius: 8px; padding: 16px; font-size: 0.9rem; overflow-x: auto; margin: 24px 0;"><code class="language-bash"># Inline token
+bonk publish steam --login "actual_token_value"
+
+# Read from a file (useful for secrets stored on disk)
+bonk publish steam --login "file:/path/to/token.txt"
+
+# Read from an environment variable (standard for CI)
+bonk publish steam --login "env:STEAM_TOKEN"</code></pre>
+
+        <p>
+            Under the hood, stores split into two publishing strategies. Steam, Apple, Epic, and Microsoft call external tools (steamcmd, Apple Transporter, etc.) as subprocesses with the right arguments assembled from the manifest. Google Play and Vivo use native Rust API clients with their own authentication flows, so they don't depend on any extra tooling being installed.
         </p>
 
         <h2>Diagnostics</h2>
