@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tudor Szabo - Projects - bonk</title>
+    <link rel="stylesheet" href="../../style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="./highlight/prism.css">
+</head>
+
+<div class="content nice-link">
+    <div class="frame tabs-frame">
+        <a href="../../index.html" class="tab-button">
+            <i class="fas fa-user"></i> About Me
+        </a>
+        <a href="../projects.html" class="tab-button">
+            <i class="fas fa-project-diagram"></i> Projects
+        </a>
+        <a href="../prev-work.html" class="tab-button">
+            <i class="fas fa-briefcase"></i> Previous Work
+        </a>
+    </div>
+
+    <article class="project-article">
+        <h1>bonk</h1>
+
+        <p>
+            <a href="https://github.com/Traverse-Research/bonk">bonk</a> is a build tool for Rust projects with support for cross-compiling and publishing to all major platforms and stores.
+            It was developed during my internship at <a href="https://traverse.nl/">Traverse Research</a>.
+        </p>
+        <p>
+            The goal is to hide all the platform-specific tooling — Android SDK, iOS codesigning, MSIX packaging, AppImage creation — behind a unified CLI, so building and deploying to any target is a single command regardless of the host machine.
+        </p>
+
+        <pre style="background-color: #2a2a2a; border-radius: 8px; padding: 16px; font-size: 0.9rem; overflow-x: auto; margin: 24px 0;"><code class="language-bash">$ bonk devices
+host                                         Linux          linux x64      Arch Linux 5.16.10-arch1-1
+adb:16ee50bc                                 FP4            android arm64  Android 11 (API 30)
+imd:55abbd4b70af4353bdea2595bbddcac4a2b7891a David's iPhone ios arm64     iPhone OS 15.3.1
+
+$ bonk build --device adb:16ee50bc
+[1/3] Fetch precompiled artifacts [72ms]
+[2/3] Build rust [143ms]
+[3/3] Create apk [958ms]</code></pre>
+
+        <h2>Device Abstraction</h2>
+
+        <p>
+            The core of bonk's cross-platform support is the device abstraction. Instead of spreading platform checks throughout the codebase, every device — Android phone, iPhone, Linux host — implements the same interface through a backend enum.
+        </p>
+
+        <pre style="background-color: #2a2a2a; border-radius: 8px; padding: 16px; font-size: 0.9rem; overflow-x: auto; margin: 24px 0;"><code class="language-rust">#[derive(Clone, Debug)]
+enum Backend {
+    Adb(Adb),
+    IDevice(IDevice),
+    Imd(IMobileDevice),
+    Host(Host),
+}
+
+pub struct Device {
+    backend: Backend,
+    id: String,
+}
+
+impl Device {
+    pub fn list() -> Result&lt;Vec&lt;Self&gt;&gt; {
+        let mut devices = vec![Self::host()];
+        if let Ok(adb) = Adb::new() {
+            adb.devices(&mut devices)?;
+        }
+        if let Ok(imd) = IMobileDevice::which() {
+            imd.devices(&mut devices).ok();
+        }
+        if let Ok(idevice) = IDevice::new() {
+            idevice.devices(&mut devices)?;
+        }
+        Ok(devices)
+    }
+
+    pub fn platform(&self) -> Result&lt;Platform&gt; {
+        match &self.backend {
+            Backend::Adb(adb)         =&gt; adb.platform(&self.id),
+            Backend::Host(host)       =&gt; host.platform(),
+            Backend::Imd(imd)         =&gt; imd.platform(&self.id),
+            Backend::IDevice(idevice) =&gt; idevice.platform(&self.id),
+        }
+    }
+}</code></pre>
+
+        <p>
+            The enum-based dispatch keeps all platform branching in one place. Adding a new device backend means adding one variant and implementing the small set of methods — everything downstream works without changes.
+        </p>
+
+        <h2>Modular Packaging</h2>
+
+        <p>
+            Each target platform's packaging format lives in its own crate: <code>apk</code> for Android, <code>appbundle</code> for iOS, <code>appimage</code> for Linux, <code>msix</code> for Windows, and <code>flat-package</code> for macOS. This keeps each packager independently usable without pulling in the full bonk CLI.
+        </p>
+        <p>
+            bonk coordinates them: it compiles for the right target triple, fetches any missing SDKs through the download manager, then hands off to whichever packaging crate matches the device.
+        </p>
+
+        <pre style="background-color: #2a2a2a; border-radius: 8px; padding: 16px; font-size: 0.9rem; overflow-x: auto; margin: 24px 0;"><code class="language-rust">// Each platform packager is a separate crate in the workspace
+// apk/      appbundle/      appimage/
+// msix/     flat-package/   mvn/
+
+// The build command resolves the packager from the device's platform
+match device.platform()? {
+    Platform::Android =&gt; apk::build(&env, &artifact, &config)?,
+    Platform::Ios     =&gt; appbundle::build(&env, &artifact, &config)?,
+    Platform::Linux   =&gt; appimage::build(&env, &artifact, &config)?,
+    Platform::Windows =&gt; msix::build(&env, &artifact, &config)?,
+    Platform::MacOs   =&gt; flat_package::build(&env, &artifact, &config)?,
+    Platform::Host    =&gt; { /* no packaging needed */ }
+}</code></pre>
+
+        <h2>Multi-Store Publishing</h2>
+
+        <p>
+            Beyond building, bonk can publish directly to Google Play, Apple App Store, Steam, Microsoft Store, Epic Games Store, and more. Credentials and signing keys are managed through bonk's settings, so the full build-sign-publish pipeline is a single command.
+        </p>
+
+        <h2>Diagnostics</h2>
+
+        <p>
+            Getting cross-compilation toolchains set up is notoriously painful. <code>bonk doctor</code> checks every required external tool and reports versions, making it easy to see exactly what's missing before a build fails halfway through.
+        </p>
+
+        <pre style="background-color: #2a2a2a; border-radius: 8px; padding: 16px; font-size: 0.9rem; overflow-x: auto; margin: 24px 0;"><code class="language-bash">$ bonk doctor
+--------------------clang/llvm toolchain--------------------
+clang                14.0.6     /usr/bin/clang
+clang++              14.0.6     /usr/bin/clang++
+lld                  14.0.6     /usr/bin/lld
+
+----------------------------rust----------------------------
+rustup               1.25.1     /usr/bin/rustup
+cargo                1.64.0     /usr/bin/cargo
+
+--------------------------android---------------------------
+adb                  1.0.41     /usr/bin/adb
+javac                11.0.17    /usr/bin/javac
+gradle               7.5.1      /usr/bin/gradle
+
+----------------------------ios-----------------------------
+idevice_id           1.3.0      /usr/bin/idevice_id
+ideviceinstaller     1.1.1      /usr/bin/ideviceinstaller</code></pre>
+    </article>
+
+    <script src="./highlight/prism.js"></script>
+</div>
+</html>
