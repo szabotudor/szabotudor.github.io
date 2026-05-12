@@ -501,6 +501,79 @@ a:active {
 
 
 /* ------------------------------------------------------------------- */
+/* Project Article Layout */
+.project-article {
+    max-width: 900px;
+    margin: 80px auto 0;
+    padding: 0 20px 60px;
+    line-height: 1.7;
+    font-size: 1.05rem;
+    color: #d0d5dc;
+}
+
+.project-article h1 {
+    font-size: 2.4rem;
+    color: #e8eaf0;
+    margin-bottom: 24px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+}
+
+.project-article h2 {
+    font-size: 1.5rem;
+    color: #c5ccdb;
+    margin-top: 48px;
+    margin-bottom: 16px;
+    font-weight: 600;
+    border-bottom: 1px solid #2e2e2e;
+    padding-bottom: 8px;
+}
+
+.project-article p {
+    margin-bottom: 16px;
+}
+
+.article-img {
+    display: block;
+    width: 100%;
+    border-radius: 8px;
+    margin: 24px 0;
+}
+
+.article-img-row {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    margin: 24px 0;
+    align-items: flex-start;
+}
+
+.article-img-row > * {
+    flex: 1 1 0;
+    min-width: 0;
+    width: 0;
+}
+
+.article-img-row > img {
+    border-radius: 8px;
+    object-fit: contain;
+}
+
+.article-img-col {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin: 24px 0;
+}
+
+.article-img-col img {
+    width: 100%;
+    border-radius: 8px;
+    object-fit: contain;
+}
+
+
+/* ------------------------------------------------------------------- */
 /* Text Animations */
 .floating-text {
     animation: float-bob ease-in-out infinite;
