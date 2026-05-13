@@ -26,11 +26,11 @@
         <h1>bonk</h1>
 
         <p>
-            <a href="https://github.com/Traverse-Research/bonk">bonk</a> is a build tool for Rust projects with support for cross-compiling and publishing to all major platforms and stores.
+            <a href="https://github.com/Traverse-Research/bonk">bonk</a> is a build tool written in Rust, for Rust projects using Traverse's custom rendering framework, with support for cross-compiling and publishing to all major platforms and stores.
             It was developed during my internship at <a href="https://traverse.nl/">Traverse Research</a>.
         </p>
         <p>
-            The goal is to hide all the platform-specific tooling — Android SDK, iOS codesigning, MSIX packaging, AppImage creation — behind a unified CLI, so building and deploying to any target is a single command regardless of the host machine.
+            The goal is to hide all the platform-specific tooling: Android SDK, iOS codesigning, MSIX (MS-Store) packaging, AppImage/Flatpak creation. Bonk handles platform-specific details, so that building and deploying to any target is a single command regardless of the host machine.
         </p>
 
         <pre style="background-color: #2a2a2a; border-radius: 8px; padding: 16px; font-size: 0.9rem; overflow-x: auto; margin: 24px 0;"><code class="language-bash">$ bonk devices
@@ -46,7 +46,7 @@ $ bonk build --device adb:16ee50bc
         <h2>Device Abstraction</h2>
 
         <p>
-            The core of bonk's cross-platform support is the device abstraction. Instead of spreading platform checks throughout the codebase, every device — Android phone, iPhone, Linux host — implements the same interface through a backend enum.
+            The core of bonk's cross-platform support is the device abstraction. Every target device (Android phone, iPhone, Linux host) implements the same interface through a backend enum.
         </p>
 
         <pre style="background-color: #2a2a2a; border-radius: 8px; padding: 16px; font-size: 0.9rem; overflow-x: auto; margin: 24px 0;"><code class="language-rust">#[derive(Clone, Debug)]
@@ -88,16 +88,16 @@ impl Device {
 }</code></pre>
 
         <p>
-            The enum-based dispatch keeps all platform branching in one place. Adding a new device backend means adding one variant and implementing the small set of methods — everything downstream works without changes.
+            The enum approach keeps bonk's code clean and easy to maintain. Adding a new device backend means adding one variant and implementing the small set of methods. Everything else works without changes.
         </p>
 
         <h2>Modular Packaging</h2>
 
         <p>
-            Each target platform's packaging format lives in its own crate: <code>apk</code> for Android, <code>appbundle</code> for iOS, <code>appimage</code> for Linux, <code>msix</code> for Windows, and <code>flat-package</code> for macOS. This keeps each packager independently usable without pulling in the full bonk CLI.
+            Each packaging format lives in its own crate: <code>apk</code> for Android, <code>appbundle</code> for iOS, <code>appimage</code> for Linux, <code>msix</code> for Windows, and <code>flat-package</code> for macOS. This, once again, keeps the codebase clean and easy to maintain and extend with more supported formats and platforms.
         </p>
         <p>
-            bonk coordinates them: it compiles for the right target triple, fetches any missing SDKs through the download manager, then hands off to whichever packaging crate matches the device.
+                bonk coordinates them: it compiles for the right target triple (derived from the <code>platform</code> and <code>arch</code>), fetches any missing SDKs through the download manager (so users don't need to have SDKs available on their machine for bonk to work), then invokes whichever packaging format matches the device.
         </p>
 
         <pre style="background-color: #2a2a2a; border-radius: 8px; padding: 16px; font-size: 0.9rem; overflow-x: auto; margin: 24px 0;"><code class="language-rust">// Each platform packager is a separate crate in the workspace
@@ -117,10 +117,10 @@ match device.platform()? {
         <h2>Auto-Updater</h2>
 
         <p>
-            Every bonk invocation silently checks GitHub for a newer version — at most once per hour, so it never slows down the build. Authentication uses the GitHub OAuth device flow: bonk prints a short code and a URL, the user approves it in a browser once, and the token is stored and refreshed automatically for up to 6 months.
+            Every bonk instance silently checks GitHub for available updates (unless explicitly disabled, and at most once per hour, so it never slows down the build). Authentication uses the GitHub App OAuth device flow: bonk prints a short code and a URL, the user approves it in a browser, and the token is stored and refreshed automatically, staying valid for up to 6 months.
         </p>
         <p>
-            When an update is found, bonk prompts inline with three choices: apply it, skip it, or view the changelog first. Saying no offers to ignore that version until the next one ships.
+            When an update is found, bonk prompts inline, before running the desired command, with three choices: apply, skip, or view the changelog before making a decision. Saying no offers to ignore that version until the next one.
         </p>
 
         <pre style="background-color: #2a2a2a; border-radius: 8px; padding: 16px; font-size: 0.9rem; overflow-x: auto; margin: 24px 0;"><code class="language-bash">$ bonk build --device host
@@ -137,11 +137,14 @@ Updating bonk in cargo root `/home/tudor/.cargo`
 Update successful! Press &lt;Return&gt; to continue</code></pre>
 
         <p>
-            On Windows, a running executable cannot be replaced in-place. To work around this, bonk copies itself to a temporary <code>update-bonk</code> binary and spawns that copy to run the actual <code>cargo install</code>, so the original binary is no longer held open when it gets overwritten.
+            On Windows, a running executable cannot be replaced. To work around this, bonk copies itself to a temporary <code>update-bonk</code>, and spawns that copy to run the actual <code>cargo install</code>. This way, the original binary is no longer held open when it gets overwritten.
+        </p>
+        <p>
+            The only disadvantage is that this detatches from the terminal, so the user could theoreticall close it while bonk is still updating, but the updater would still run in the background.
         </p>
 
         <pre style="background-color: #2a2a2a; border-radius: 8px; padding: 16px; font-size: 0.9rem; overflow-x: auto; margin: 24px 0;"><code class="language-rust">if want_update {
-    // On Windows, a running executable can't be replaced in-place.
+    // On Windows, a running executable can't be replaced.
     // Copy bonk to a temp name and spawn the copy to do the install.
     let temp_updater = cargo_root.join(format!("bin/{}", exe!("update-bonk")));
     std::fs::copy(
@@ -156,10 +159,10 @@ Update successful! Press &lt;Return&gt; to continue</code></pre>
         <h2>Interactive Manifest Browser</h2>
 
         <p>
-            bonk projects are configured through a manifest file. Rather than documenting every field separately, <code>bonk manifest</code> opens an interactive terminal browser generated directly from the Rust config types using <code>schemars</code>.
+            bonk projects are configured through a manifest file. Rather than documenting a largo magic config file, <code>bonk manifest</code> opens an interactive terminal interface generated directly from the Rust config types using <code>schemars</code>, where the user can browse through the options in the manifest.
         </p>
         <p>
-            At startup, bonk derives a full JSON schema from <code>RawConfig</code> at compile time. The manifest command then walks that schema recursively — resolving <code>$ref</code> pointers, unwrapping <code>anyOf</code>/<code>oneOf</code> variants, and distinguishing optional fields from required ones — and builds a navigable tree from it.
+            At startup, bonk derives a full JSON schema from <code>RawConfig</code>. The manifest command then walks that schema recursively, resolving <code>$ref</code> pointers, unwrapping <code>anyOf</code>/<code>oneOf</code> variants, and detecting optional fields. It builds a navigable tree from it, where users can see the schema and description of each config section.
         </p>
 
         <pre style="background-color: #2a2a2a; border-radius: 8px; padding: 16px; font-size: 0.9rem; overflow-x: auto; margin: 24px 0;"><code class="language-rust">// Derive a full JSON schema from the config types at compile time
@@ -169,11 +172,11 @@ let full_schema = schemars::schema_for!(RawConfig).to_value();
 let mut renderer = TreeRenderer::&lt;ManifestProperty&gt;::default();
 generate_ui(&mut renderer.tree, &full_schema, root_node, &full_schema, "the manifest")?;
 
-// Run the keyboard-navigable terminal UI
+// Run the interactive terminal UI
 renderer.run()?;</code></pre>
 
         <p>
-            Each node in the tree is a <code>ManifestProperty</code> — a field name, its inferred type, and its description pulled from the schema. Navigating to a property expands it inline to show type and description without leaving the terminal. Because the UI is generated from the schema, it always stays in sync with the actual config format.
+            Each node in the tree is a <code>ManifestProperty</code>: a field name, its type, and its description, all pulled from the schema. Navigating to (hovering over) a property expands it to show type and description without leaving the terminal. Because the UI is generated directly from the manifest struct, it always stays in sync with the actual config format. No need for intervention from maintainers.
         </p>
 
         <pre style="background-color: #2a2a2a; border-radius: 8px; padding: 16px; font-size: 0.9rem; overflow-x: auto; margin: 24px 0;"><code class="language-rust">// The schema introspection trait — extracts type info from raw JSON schema nodes
@@ -201,10 +204,10 @@ impl CheckItemType for serde_json::Value {
         <h2>Multi-Store Publishing</h2>
 
         <p>
-            Beyond building, bonk can publish directly to Google Play, Apple App Store, Steam, Microsoft Store, Epic Games Store, and Vivo. Each store is a subcommand — <code>bonk publish steam</code>, <code>bonk publish apple</code>, <code>bonk publish play-store</code>, and so on.
+            Bonk can also publish directly to Google Play, Apple App Store, Steam, Microsoft Store, Epic Games Store, and Vivo (and more coming). Each store is a subcommand: <code>bonk publish steam</code>, <code>bonk publish apple</code>, <code>bonk publish play-store</code>, and so on.
         </p>
         <p>
-            Credentials can be passed three ways: inline as a string, read from a file, or pulled from an environment variable. The same <code>PublishToken</code> type handles all three, so CI pipelines and local setups both work without changing the manifest.
+            Credentials can be passed three ways: a raw string, file contents, or an environment variable. The same <code>PublishToken</code> type handles all three, so CI pipelines and local setups both can use the same manifest for publishing.
         </p>
 
         <pre style="background-color: #2a2a2a; border-radius: 8px; padding: 16px; font-size: 0.9rem; overflow-x: auto; margin: 24px 0;"><code class="language-bash"># Inline token
@@ -217,13 +220,13 @@ bonk publish steam --login "file:/path/to/token.txt"
 bonk publish steam --login "env:STEAM_TOKEN"</code></pre>
 
         <p>
-            Under the hood, stores split into two publishing strategies. Steam, Apple, Epic, and Microsoft call external tools (steamcmd, Apple Transporter, etc.) as subprocesses with the right arguments assembled from the manifest. Google Play and Vivo use native Rust API clients with their own authentication flows, so they don't depend on any extra tooling being installed.
+            Under the hood, stores split into two publishing strategies. Steam, Apple, Epic, and Microsoft call external CLI tools (steamcmd, Apple Transporter, etc.) with the right arguments generated from the generic bonk arguments. Google Play and Vivo use native Rust API clients through the store's REST API, so they don't depend on any extra tools to be pulled by bonk's downloader.
         </p>
 
         <h2>Diagnostics</h2>
 
         <p>
-            Getting cross-compilation toolchains set up is notoriously painful. <code>bonk doctor</code> checks every required external tool and reports versions, making it easy to see exactly what's missing before a build fails halfway through.
+            Getting cross-compilation toolchains set up is notoriously painful. <code>bonk doctor</code> checks every required external tool and reports versions, making it easy for users to know what tools they might be missing before running builds or debugging.
         </p>
 
         <pre style="background-color: #2a2a2a; border-radius: 8px; padding: 16px; font-size: 0.9rem; overflow-x: auto; margin: 24px 0;"><code class="language-bash">$ bonk doctor
